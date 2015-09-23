@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # credits - shykes/docker-wordpress and paulczar/docker-wordpress
 
 docker rm -f `docker ps|grep "slave\|master"|awk '{print $1}'`
@@ -42,17 +42,7 @@ mysql -uroot -h $MYSQL02_IP -AN -e "CHANGE MASTER TO master_host='$MYSQL01_IP', 
 	master_user='replication', master_password='password', master_log_file='$MYSQL01_File', \
 	master_log_pos=$MYSQL01_Position;"
 
-echo "* Set MySQL02 as master on MySQL01"
-
-MYSQL02_Position=$(mysql -uroot -h $MYSQL02_IP -e "show master status \G" | grep Position | awk '{print $2}')
-MYSQL02_File=$(mysql -uroot -h $MYSQL02_IP -e "show master status \G"     | grep File     | awk '{print $2}')
-
-mysql -uroot -h $MYSQL01_IP -AN -e "CHANGE MASTER TO master_host='$MYSQL02_IP', master_port=3306, \
-	master_user='replication', master_password='password', master_log_file='$MYSQL02_File', \
-	master_log_pos=$MYSQL02_Position;"
-
 echo "* Start Slave on both Servers"
-mysql -uroot -h $MYSQL01_IP -AN -e "start slave;"
 mysql -uroot -h $MYSQL02_IP -AN -e "start slave;"
 
 echo "* Create database 'mydata' on MySQL01"
