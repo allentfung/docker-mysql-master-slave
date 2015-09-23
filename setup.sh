@@ -48,6 +48,10 @@ mysql -uroot -h $MYSQL02_IP -AN -e "start slave;"
 echo "* Create database 'mydata' on MySQL01"
 
 mysql -uroot -h $MYSQL01_IP -e "create database mydata;"
+mysql -uroot -h $MYSQL01_IP -e "CREATE TABLE mydata.t ( id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY );"
+docker exec -it master mysql -e "insert into mydata.t values ();"
+docker exec -it master mysql -e "insert into mydata.t values ();"
+docker exec -it master mysql -e "insert into mydata.t values ();"
 
 echo "* Sleep 2 seconds, then check that database 'mydata' exists on MySQL02"
 
