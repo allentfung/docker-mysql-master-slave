@@ -1,7 +1,7 @@
 #!/bin/bash
 # credits - shykes/docker-wordpress and paulczar/docker-wordpress
 
-docker rm -f `docker ps|grep "slave\|master"|awk '{print $1}'`
+docker rm -f `docker ps -a|grep "slave\|master"|awk '{print $1}'`
 
 echo 
 echo "Create MySQL Servers (master / slave repl)"
@@ -19,6 +19,8 @@ MYSQL02_IP=$(docker inspect $MYSQL02 | grep IPAd | awk -F'"' '{print $4}')
 
 echo "* Sleep for two seconds for servers to come online..."
 sleep 2
+
+docker exec -it master service ssh start
 
 echo "* Creat replication user"
 
