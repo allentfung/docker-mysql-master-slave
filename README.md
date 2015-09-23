@@ -8,8 +8,8 @@ Build and run:
 <pre>
 git clone https://github.com/allentfung/docker-mysql-master-slave.git
 cd docker-mysql-master-slave
-sudo docker build -t docker-mysql .
-sudo setup.sh
+./docker build -t docker-mysql .
+./setup.sh
 </pre>
 
 MySQL credentials are: `root / root`.
